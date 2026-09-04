@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>工程资源撮合与用工管理平台 · 多端原型</title>
+<style>
+:root{
+  --bg:#fff; --bg2:#f4f5f7; --txt:#1c1e21; --txt2:#62676e; --txt3:#9aa0a8;
+  --bd:rgba(0,0,0,.12); --bd2:rgba(0,0,0,.22); --bd3:rgba(0,0,0,.34);
+  --info-bg:#E6F1FB; --info:#185FA5; --info-bd:#378ADD;
+  --ok-bg:#E1F5EE; --ok:#0F6E56; --warn-bg:#FAEEDA; --warn:#854F0B; --danger-bg:#FCEBEB; --danger:#A32D2D;
+  --rm:8px; --rl:12px;
+  --fs:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif;
+}
+*{box-sizing:border-box;}
+body{font-family:var(--fs);color:var(--txt);margin:0;padding:28px 32px;font-size:13px;line-height:1.6;}
+.cover{text-align:center;padding:60px 0 30px;}
+.cover h1{font-size:30px;font-weight:600;margin:0 0 12px;}
+.cover p{color:var(--txt2);font-size:15px;margin:4px 0;}
+.cover .meta{margin-top:26px;color:var(--txt3);font-size:13px;}
+.sec{font-size:20px;font-weight:600;margin:0 0 4px;}
+.secsub{color:var(--txt2);margin:0 0 20px;font-size:13px;}
+.pb{break-before:page;}
+.badge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:20px;}
+.b-info{background:var(--info-bg);color:var(--info);}
+.b-ok{background:var(--ok-bg);color:var(--ok);}
+.b-warn{background:var(--warn-bg);color:var(--warn);}
+.b-danger{background:var(--danger-bg);color:var(--danger);}
+.card{background:var(--bg);border:.5px solid var(--bd);border-radius:var(--rl);padding:14px 16px;margin-bottom:12px;}
+.btn{display:inline-block;padding:8px 16px;border-radius:var(--rm);border:.5px solid var(--bd2);font-size:13px;background:var(--bg);color:var(--txt2);text-align:center;}
+.btn-p{background:var(--info-bg);color:var(--info);border-color:var(--info-bd);}
+.muted{color:var(--txt2);font-size:12px;}
+.h15{font-size:15px;font-weight:600;margin:0 0 4px;}
+.row{display:flex;align-items:center;gap:10px;}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+.metric{background:var(--bg2);border-radius:var(--rm);padding:12px;}
+.metric .n{font-size:22px;font-weight:600;}
+.prog{height:6px;background:var(--bg2);border-radius:4px;overflow:hidden;margin-top:6px;}
+.prog>i{display:block;height:100%;background:var(--info-bd);}
+.chk{width:18px;height:18px;border-radius:50%;background:var(--ok-bg);color:var(--ok);display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;}
+.avatar{width:44px;height:44px;border-radius:50%;background:var(--info-bg);color:var(--info);display:flex;align-items:center;justify-content:center;font-weight:600;flex-shrink:0;}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+th,td{text-align:left;padding:9px 8px;border-bottom:.5px solid var(--bd);word-break:break-word;vertical-align:top;}
+th{color:var(--txt3);font-weight:400;font-size:12px;}
+.phone-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;justify-items:center;}
+.phone{width:330px;border:.5px solid var(--bd3);border-radius:28px;padding:14px;background:var(--bg2);}
+.scr{background:var(--bg);border-radius:18px;overflow:hidden;border:.5px solid var(--bd);}
+.stbar{display:flex;justify-content:space-between;font-size:11px;color:var(--txt3);padding:8px 16px;}
+.apph{padding:4px 16px 12px;}
+.appbody{padding:0 16px 20px;min-height:300px;}
+.tabbar{display:flex;border-top:.5px solid var(--bd);background:var(--bg);}
+.tabb{flex:1;text-align:center;padding:10px 0;font-size:11px;color:var(--txt3);}
+.tabb.on{color:var(--info);font-weight:600;}
+.slabel{text-align:center;font-size:13px;font-weight:600;margin:14px 0 8px;color:var(--txt2);}
+.field{margin-bottom:12px;}
+.field label{display:block;font-size:12px;color:var(--txt2);margin-bottom:4px;}
+.field .inp{border:.5px solid var(--bd2);border-radius:var(--rm);padding:9px 12px;font-size:13px;background:var(--bg2);}
+.desk{display:flex;border:.5px solid var(--bd);border-radius:var(--rl);overflow:hidden;background:var(--bg);margin-bottom:26px;}
+.side{width:190px;background:var(--bg2);padding:16px 12px;border-right:.5px solid var(--bd);flex-shrink:0;}
+.side h4{font-size:13px;font-weight:600;margin:0 0 14px;}
+.sitem{padding:9px 12px;font-size:13px;color:var(--txt2);border-radius:var(--rm);margin-bottom:2px;}
+.sitem.on{background:var(--info-bg);color:var(--info);font-weight:600;}
+.main{flex:1;padding:20px 24px;min-width:0;}
+.win{display:flex;align-items:center;gap:7px;margin-bottom:10px;}
+.win .dot{width:10px;height:10px;border-radius:50%;}
+.win .url{flex:1;background:var(--bg2);border-radius:6px;padding:4px 10px;font-size:11px;color:var(--txt3);}
+.split{display:grid;grid-template-columns:1.1fr 1fr;gap:16px;}
+.ulist{border:.5px solid var(--bd);border-radius:var(--rl);overflow:hidden;}
+.urow{display:flex;align-items:center;gap:10px;padding:11px 14px;border-bottom:.5px solid var(--bd);font-size:13px;}
+.urow.on{background:var(--info-bg);}
+.urow:last-child{border-bottom:none;}
+@media print{body{padding:0;}@page{margin:12mm;}}
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <h1>工程资源撮合与用工管理平台</h1>
+  <p>多端交互原型 · 需求方 App/Web · 团队管理 App/Web · 工人 App · 运营后台</p>
+  <p>资源拼单撮合 · 多方电子签约 · 工人手机号登录 · 履历资质管理 · 打卡成果上报</p>
+  <div class="meta">版本 v2.0 · 2026-09-04 · 示例场景：苏州产线设备搬迁（电工5 + 叉车5 + 高空作业者3）</div>
+</div>
+
+<!-- ========== 需求方手机端 ========== -->
+<div class="pb"></div>
+<div class="sec">一、手机端 · 需求方 App</div>
+<p class="secsub">需求方经办人 / 项目经理：发需求、看方案、签约、盯进度、收异常提醒。</p>
+<div class="phone-grid">
+
+  <div><div class="phone"><div class="scr">
+    <div class="stbar"><span>9:41</span><span>5G · 88%</span></div>
+    <div class="apph"><div style="font-size:16px;font-weight:600;">需求方工作台</div><div class="muted">XX制造 · 王经理</div></div>
+    <div class="appbody">
+      <div class="btn btn-p" style="width:100%;padding:12px;margin-bottom:12px;">+ 发布用工需求</div>
+      <div class="card"><div class="row" style="justify-content:space-between;"><b style="font-size:14px;">苏州产线搬迁</b><span class="badge b-warn">撮合中</span></div>
+        <div class="muted" style="margin:6px 0;">电工5 已满 · 叉车5 缺2 · 高空3 已满</div>
+        <div class="prog"><i style="width:77%"></i></div></div>
+      <div class="card"><div class="row" style="justify-content:space-between;"><b style="font-size:14px;">上海货架安装</b><span class="badge b-info">待报名</span></div>
+        <div class="muted" style="margin-top:6px;">高空作业者 4 人 · 09.25 起</div></div>
+      <div class="card"><div class="row" style="justify-content:space-between;"><b style="font-size:14px;">无锡厂房搬迁</b><span class="badge b-ok">履约中</span></div>
+        <div class="muted" style="margin-top:6px;">进度 62% · 今日到岗 13/13</div></div>
+    </div>
+    <div class="tabbar"><div class="tabb on">需求</div><div class="tabb">方案</div><div class="tabb">项目</div><div class="tabb">消息</div></div>
+  </div></div><div class="slabel">① 需求列表</div></div>
+
+  <div><div class="phone"><div class="scr">
+    <div class="stbar"><span>9:41</span><span>5G · 88%</span></div>
+    <div class="apph"><div style="font-size:16px;font-weight:600;">发布需求</div></div>
+    <div class="appbody">
+      <div class="field"><label>项目名称</label><div class="inp">苏州产线设备搬迁</div></div>
+      <div class="grid2" style="margin-bottom:12px;">
+        <div class="field" style="margin:0;"><label>地点</label><div class="inp">苏州工业园区</div></div>
+        <div class="field" style="margin:0;"><label>工期</label><div class="inp">09.10-09.20</div></div>
+      </div>
+      <div class="card"><b style="font-size:13px;">资源清单</b>
+        <div style="margin-top:10px;font-size:13px;" class="row"><span style="flex:1;">电工 × 5（低压电工证）</span><span class="muted">¥380/人天</span></div>
+        <div style="margin-top:8px;font-size:13px;" class="row"><span style="flex:1;">叉车(含工) × 5</span><span class="muted">¥1,200/台天</span></div>
+        <div style="margin-top:8px;font-size:13px;" class="row"><span style="flex:1;">高空作业者 × 3（登高证）</span><span class="muted">¥520/人天</span></div>
+        <div class="btn" style="width:100%;margin-top:10px;">+ 添加资源条目</div></div>
+      <div class="btn btn-p" style="width:100%;padding:12px;">提交发布</div>
+    </div>
+    <div class="tabbar"><div class="tabb on">需求</div><div class="tabb">方案</div><div class="tabb">项目</div><div class="tabb">消息</div></div>
+  </div></div><div class="slabel">② 发布需求表单</div></div>
+
+  <div><div class="phone"><div class="scr">
+    <div class="stbar"><span>9:41</span><span>5G · 88%</span></div>
+    <div class="apph"><div style="font-size:16px;font-weight:600;">撮合方案</div></div>
+    <div class="appbody">
+      <div class="grid2" style="margin-bottom:12px;">
+        <div class="metric"><div class="muted">总价</div><div class="n">¥86,400</div></div>
+        <div class="metric"><div class="muted">团队</div><div class="n">3 家</div></div>
+      </div>
+      <div class="card"><b style="font-size:13px;">拼单来源</b>
+        <div style="margin-top:8px;font-size:13px;">电工×5 <span class="muted">→ 宏达劳务</span></div>
+        <div style="margin-top:6px;font-size:13px;">叉车×3 <span class="muted">→ 迅捷吊装</span></div>
+        <div style="margin-top:6px;font-size:13px;">叉车×2 <span class="muted">→ 宏达劳务</span></div>
+        <div style="margin-top:6px;font-size:13px;">高空×3 <span class="muted">→ 安捷高空</span></div></div>
+      <div class="btn btn-p" style="width:100%;padding:12px;margin-bottom:8px;">确认方案并签约</div>
+      <div class="btn" style="width:100%;">替换来源 / 看备选</div>
+    </div>
+    <div class="tabbar"><div class="tabb">需求</div><div class="tabb on">方案</div><div class="tabb">项目</div><div class="tabb">消息</div></div>
+  </div></div><div class="slabel">③ 撮合方案确认</div></div>
+
+  <div><div class="phone"><div class="scr">
+    <div class="stbar"><span>9:41</span><span>5G · 88%</span></div>
+    <div class="apph"><div style="font-size:16px;font-weight:600;">项目进度 · 苏州</div></div>
+    <div class="appbody">
+      <div class="metric" style="margin-bottom:12px;"><div class="muted">整体进度</div><div class="n">62%</div></div>
+      <div class="card"><div class="row"><span class="chk">✓</span><span style="font-size:13px;flex:1;">设备断电验电 <span class="muted">09.10</span></span></div>
+        <div style="margin-top:10px;" class="row"><span class="chk">✓</span><span style="font-size:13px;flex:1;">主电缆拆除 <span class="muted">09.12</span></span></div>
+        <div style="margin-top:10px;color:var(--info);font-size:13px;">● 吊装运输（60%）</div>
+        <div style="margin-top:10px;color:var(--txt3);font-size:13px;">○ 新址就位调试</div></div>
+      <div class="card"><b style="font-size:13px;">今日异常</b>
+        <div style="margin-top:8px;font-size:13px;color:var(--danger);">王磊(高空) 缺勤 · 安捷高空</div>
+        <div style="margin-top:6px;font-size:13px;color:var(--warn);">李勇 吊装视频待审核</div></div>
+    </div>
+    <div class="tabbar"><div class="tabb">需求</div><div class="tabb">方案</div><div class="tabb on">项目</div><div class="tabb">消息</div></div>
+  </div></div><div class="slabel">④ 项目进度与异常</div></div>
+
+  <div><div class="phone"><div class="scr">
+    <div class="stbar"><span>9:41</span><span>5G · 88%</span></div>
+    <div class="apph"><div style="font-size:16px;font-weight:600;">消息 / 签约</div></div>
+    <div class="appbody">
+      <div class="card"><div class="row" style="justify-content:space-between;"><b style="font-size:13px;">资源服务协议待签</b><span class="badge b-warn">1/4</span></div>
+        <div class="muted" style="margin:6px 0 10px;">安捷高空尚未签署</div>
+        <div class="btn btn-p" style="width:100%;">刷脸去签署</div></div>
+      <div class="card" style="font-size:13px;">· 迅捷吊装已签约 <span class="muted">09.08</span></div>
+      <div class="card" style="font-size:13px;">· 宏达劳务已签约 <span class="muted">09.08</span></div>
+    </div>
+    <div class="tabbar"><div class="tabb">需求</div><div class="tabb">方案</div><div class="tabb">项目</div><div class="tabb on">消息</div></div>
+  </div></div><div class="slabel">⑤ 消息与多方签约</div></div>
+</div>
+
+<!-- ========== 团队管理手机端 ========== -->
+<div class="pb"></div>
+<div class="sec">二、手机端 · 团队管理 App</div>
+<p class="secsub">团队管理员（队长/包工头）：现场录入管理工人、上传证书、报名接单、盯履约。</p>
+<div class="phone-grid">
+
+  <div><div class="phone"><div class="scr">
+    <div class="stbar"><span>9:41</span><span>5G · 88%</span></div>
+    <div class="apph"><div style="font-size:16px;font-weight:600;">团队管理 · 迅捷吊装</div><div class="muted">管理员：刘队</div></div>
+    <div class="appbody">
+      <div class="btn btn-p" style="width:100%;padding:12px;margin-bottom:12px;">+ 录入工人</div>
+      <div class="card"><div class="row"><div class="avatar">李</div>
+        <div style="flex:1;"><div style="font-weight:600;font-size:14px;">李勇 · 叉车工</div><div class="muted">叉车操作证 <span class="badge b-ok">已核实</span></div></div>
+        <span class="badge b-ok">在岗</span></div></div>
+      <div class="card"><div class="row"><div class="avatar">赵</div>
+        <div style="flex:1;"><div style="font-weight:600;font-size:14px;">赵强 · 叉车工</div><div class="muted">叉车操作证 <span class="badge b-warn">将到期</span></div></div>
+        <span class="muted">空闲</span></div></div>
+      <div class="card"><div class="row"><div class="avatar">陈</div>
+        <div style="flex:1;"><div style="font-weight:600;font-size:14px;">陈军 · 司索工</div><div class="muted">未上传证书</div></div>
+        <span class="muted">空闲</span></div></div>
+    </div>
+    <div class="tabbar"><div class="tabb on">工人</div><div class="tabb">接单</div><div class="tabb">项目</div><div class="tabb">详情</div></div>
+  </div></div><div class="slabel">① 工人列表</div></div>
+
+  <div><div class="phone"><div class="scr">
+    <div class="stbar"><span>9:41</span><span>5G · 88%</span></div>
+    <div class="apph"><div style="font-size:16px;font-weight:600;">录入工人</div></div>
+    <div class="appbody">
+      <div class="field"><label>姓名</label><div class="inp">请输入工人姓名</div></div>
+      <div class="field"><label>手机号（登录账号）</label><div class="inp">138****0000</div></div>
+      <div class="field"><label>工种</label><div class="inp">叉车工 ▾</div></div>
+      <div class="field"><label>资质证书（拍照上传）</label>
+        <div style="border:.5px dashed var(--bd2);border-radius:var(--rm);padding:16px;text-align:center;color:var(--txt3);font-size:12px;line-height:1.7;">拍照 / 相册上传证书<br>平台审核后打"已核实"</div></div>
+      <div class="field"><label>身份证（实名认证用）</label>
+        <div style="border:.5px dashed var(--bd2);border-radius:var(--rm);padding:14px;text-align:center;color:var(--txt3);font-size:12px;">上传人像面 / 国徽面</div></div>
+      <div class="btn btn-p" style="width:100%;padding:12px;">保存并邀请工人登录</div>
+      <div class="muted" style="text-align:center;margin-top:8px;">工人收到短信，凭手机号+验证码登录</div>
+    </div>
+    <div class="tabbar"><div class="tabb on">工人</div><div class="tabb">接单</div><div class="tabb">项目</div><div class="tabb">详情</div></div>
+  </div></div><div class="slabel">② 录入工人（手机号即账号）</div></div>
+
+  <div><div class="phone"><div class="scr">
+    <div class="stbar"><span>9:41</span><span>5G · 88%</span></div>
+    <div class="apph"><div style="font-size:16px;font-weight:600;">工人详情</div></div>
+    <div class="appbody">
+      <div class="card"><div class="row"><div class="avatar" style="width:56px;height:56px;font-size:18px;">李</div>
+        <div><div style="font-weight:600;font-size:15px;">李勇</div><div class="muted">叉车工 · 8年 · 评分 4.9</div></div></div></div>
+      <div class="card"><b style="font-size:13px;">资质证书</b>
+        <div style="margin-top:8px;font-size:13px;" class="row"><span style="flex:1;">叉车操作证</span><span class="badge b-ok">已核实</span></div>
+        <div style="margin-top:6px;font-size:13px;" class="row"><span style="flex:1;">有效期至 2027.06</span><span class="muted">正常</span></div></div>
+      <div class="card"><b style="font-size:13px;">履历</b>
+        <div style="margin-top:8px;font-size:13px;">苏州产线搬迁 · 叉车 <span class="muted">进行中</span></div>
+        <div style="margin-top:6px;font-size:13px;">某仓库搬迁 · 叉车 <span class="muted">2026.07</span></div></div>
+      <div class="btn" style="width:100%;">编辑资料 / 续传证书</div>
+    </div>
+    <div class="tabbar"><div class="tabb">工人</div><div class="tabb">接单</div><div class="tabb">项目</div><div class="tabb on">详情</div></div>
+  </div></div><div class="slabel">③ 工人详情 / 证书履历</div></div>
+
+  <div><div class="phone"><div class="scr">
+    <div class="stbar"><span>9:41</span><span>5G · 88%</span></div>
+    <div class="apph"><div style="font-size:16px;font-weight:600;">接单广场</div></div>
+    <div class="appbody">
+      <div class="card"><div class="row" style="justify-content:space-between;"><b style="font-size:14px;">苏州产线搬迁</b><span class="badge b-info">缺叉车2</span></div>
+        <div class="muted" style="margin:6px 0 10px;">需叉车(含工)5 · 我方可供 3</div>
+        <div class="btn btn-p" style="width:100%;">部分报名：供叉车×3</div></div>
+      <div class="card"><div class="row" style="justify-content:space-between;"><b style="font-size:14px;">上海货架安装</b><span class="badge b-ok">已报名</span></div>
+        <div class="muted" style="margin-top:6px;">供叉车×2 · 待撮合</div></div>
+    </div>
+    <div class="tabbar"><div class="tabb">工人</div><div class="tabb on">接单</div><div class="tabb">项目</div><div class="tabb">详情</div></div>
+  </div></div><div class="slabel">④ 接单广场（部分报名）</div></div>
+
+  <div><div class="phone"><div class="scr">
+    <div class="stbar"><span>9:41</span><span>5G · 88%</span></div>
+    <div class="apph"><div style="font-size:16px;font-weight:600;">履约 · 苏州项目</div></div>
+    <div class="appbody">
+      <div class="card"><table><tr><th>工人</th><th>打卡</th><th>成果</th></tr>
+        <tr><td>李勇</td><td><span class="badge b-ok">07:55</span></td><td><span class="badge b-warn">待审</span></td></tr>
+        <tr><td>赵强</td><td><span class="badge b-ok">08:00</span></td><td><span class="badge b-ok">已过</span></td></tr>
+      </table></div>
+      <div class="metric"><div class="muted">本项目应收</div><div class="n">¥36,000</div></div>
+    </div>
+    <div class="tabbar"><div class="tabb">工人</div><div class="tabb">接单</div><div class="tabb on">项目</div><div class="tabb">详情</div></div>
+  </div></div><div class="slabel">⑤ 履约跟踪与收款</div></div>
+</div>
+
+<!-- ========== 工人 App + 登录 ========== -->
+<div class="pb"></div>
+<div class="sec">三、手机端 · 工人 App（手机号登录 + 打卡成果）</div>
+<p class="secsub">一线工人：手机号验证码免密登录，打卡、水印相机传成果、看履历薪资。</p>
+<div class="phone-grid">
+
+  <div><div class="phone"><div class="scr">
+    <div class="stbar"><span>9:41</span><span>5G · 88%</span></div>
+    <div class="appbody" style="padding-top:34px;">
+      <div style="text-align:center;margin-bottom:22px;">
+        <div style="width:56px;height:56px;border-radius:14px;background:var(--info-bg);color:var(--info);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:22px;font-weight:600;">工</div>
+        <div style="font-size:17px;font-weight:600;">工人端登录</div>
+        <div class="muted">手机号验证，无需注册密码</div></div>
+      <div class="field"><label>手机号</label><div class="inp">请输入本人手机号</div></div>
+      <div class="field"><label>短信验证码</label>
+        <div style="display:flex;gap:8px;"><div class="inp" style="flex:1;">6位验证码</div><div class="btn" style="white-space:nowrap;">获取验证码</div></div></div>
+      <div class="btn btn-p" style="width:100%;padding:12px;margin:8px 0 12px;">登录 / 注册</div>
+      <div class="muted" style="text-align:center;line-height:1.7;">首次登录自动关联团队录入的档案<br>登录即同意《用工服务协议》《隐私政策》</div>
+    </div>
+  </div></div><div class="slabel">⓪ 手机号 + 验证码登录</div></div>
+
+  <div><div class="phone"><div class="scr">
+    <div class="stbar"><span>9:41</span><span>5G · 88%</span></div>
+    <div class="apph"><div style="font-size:16px;font-weight:600;">老张 · 电工</div><div class="muted">苏州工业园区 · XX设备搬迁</div></div>
+    <div class="appbody">
+      <div class="card" style="text-align:center;padding:18px 16px;">
+        <div style="width:60px;height:60px;border-radius:50%;background:var(--info-bg);color:var(--info);display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:20px;font-weight:600;">打</div>
+        <div class="h15">今日上班打卡</div>
+        <div class="muted" style="margin-bottom:12px;">电子围栏内 · 定位+人脸+水印</div>
+        <div class="btn btn-p" style="width:100%;padding:12px;">上班打卡 08:02 ✓</div></div>
+      <div class="grid2" style="margin-bottom:12px;">
+        <div class="metric"><div class="muted">今日工时</div><div class="n">7.5h</div></div>
+        <div class="metric"><div class="muted">本月应发</div><div class="n">¥6,800</div></div></div>
+      <div class="card"><div class="row" style="justify-content:space-between;"><b style="font-size:13px;">待办</b><span class="badge b-warn">2</span></div>
+        <div style="margin-top:10px;font-size:13px;">· 上传今日接线成果</div>
+        <div style="margin-top:6px;font-size:13px;">· 签署用工确认书</div></div>
+    </div>
+    <div class="tabbar"><div class="tabb on">首页</div><div class="tabb">成果</div><div class="tabb">履历</div><div class="tabb">我的</div></div>
+  </div></div><div class="slabel">① 首页 · 打卡</div></div>
+
+  <div><div class="phone"><div class="scr">
+    <div class="stbar"><span>9:41</span><span>5G · 88%</span></div>
+    <div class="apph"><div style="font-size:16px;font-weight:600;">上传工作成果</div></div>
+    <div class="appbody">
+      <div class="card" style="text-align:center;padding:16px;">
+        <div style="height:100px;border:.5px dashed var(--bd2);border-radius:var(--rm);display:flex;align-items:center;justify-content:center;color:var(--txt3);font-size:12px;line-height:1.7;margin-bottom:10px;">水印相机取景<br>时间/地点/经纬度自动叠加</div>
+        <div class="btn btn-p" style="width:100%;">拍照 / 录制</div></div>
+      <div class="card"><b style="font-size:13px;">关联任务</b>
+        <div style="margin-top:8px;font-size:13px;" class="row"><span class="chk">✓</span> 配电柜断电与验电</div>
+        <div style="margin-top:8px;font-size:13px;" class="row"><span class="chk">✓</span> 主电缆敷设</div>
+        <div style="margin-top:8px;font-size:13px;color:var(--info);">● 接线与调试（进行中）</div></div>
+      <div class="btn" style="width:100%;margin-top:4px;">提交工作成果</div>
+    </div>
+    <div class="tabbar"><div class="tabb">首页</div><div class="tabb on">成果</div><div class="tabb">履历</div><div class="tabb">我的</div></div>
+  </div></div><div class="slabel">② 成果 · 水印相机</div></div>
+
+  <div><div class="phone"><div class="scr">
+    <div class="stbar"><span>9:41</span><span>5G · 88%</span></div>
+    <div class="apph"><div style="font-size:16px;font-weight:600;">我的履历</div></div>
+    <div class="appbody">
+      <div class="card"><div class="row" style="gap:12px;">
+        <div class="avatar">张</div>
+        <div><div style="font-weight:600;font-size:14px;">张建国</div><div class="muted">低压电工 · 12年</div></div></div></div>
+      <div class="card"><b style="font-size:13px;">资质证书</b>
+        <div style="margin-top:8px;" class="row"><span style="font-size:13px;flex:1;">低压电工证</span><span class="badge b-ok">已核实</span></div>
+        <div style="margin-top:8px;" class="row"><span style="font-size:13px;flex:1;">高处作业证</span><span class="badge b-ok">已核实</span></div></div>
+      <div class="card"><b style="font-size:13px;">履历 · 历史项目</b>
+        <div style="margin-top:8px;font-size:13px;">XX工厂搬迁 · 电工 <span class="muted">2026.08</span></div>
+        <div style="margin-top:6px;font-size:13px;">XX数据中心布线 · 班组长 <span class="muted">2026.06</span></div>
+        <div style="margin-top:10px;"><span class="badge b-info">评分 4.9</span> <span class="badge b-ok">履约 38 次</span></div></div>
+    </div>
+    <div class="tabbar"><div class="tabb">首页</div><div class="tabb">成果</div><div class="tabb on">履历</div><div class="tabb">我的</div></div>
+  </div></div><div class="slabel">③ 履历与证书</div></div>
+</div>
+
+<!-- ========== 电脑端：团队工人档案管理 ========== -->
+<div class="pb"></div>
+<div class="sec">四、电脑端 · 团队管理 Web（工人履历与资质管理）</div>
+<p class="secsub">团队资料员在电脑端批量维护工人档案、审核资质证书、管理履历与设备台账。</p>
+
+<div class="desk">
+  <div class="side"><h4>团队管理后台 · 迅捷吊装</h4>
+    <div class="sitem on">工人档案管理</div>
+    <div class="sitem">资质证书审核</div>
+    <div class="sitem">设备台账</div>
+    <div class="sitem">报名与投标</div>
+    <div class="sitem">履约与收款</div>
+  </div>
+  <div class="main">
+    <div class="win"><span class="dot" style="background:#e24b4a;"></span><span class="dot" style="background:#ef9f27;"></span><span class="dot" style="background:#639922;"></span><span class="url">team.example.com/workers</span></div>
+    <div class="row" style="justify-content:space-between;margin-bottom:14px;"><div class="h15">工人档案 · 履历与资质管理</div><span class="btn btn-p">+ 录入工人 / 批量导入</span></div>
+    <div class="split">
+      <div class="ulist">
+        <div class="urow on"><div class="avatar">李</div><div style="flex:1;"><div>李勇 · 叉车工</div><div class="muted">证书已核实 · 在岗</div></div></div>
+        <div class="urow"><div class="avatar">赵</div><div style="flex:1;"><div>赵强 · 叉车工</div><div class="muted">证书将到期 · 空闲</div></div></div>
+        <div class="urow"><div class="avatar">陈</div><div style="flex:1;"><div>陈军 · 司索工</div><div class="muted">待补证书</div></div></div>
+        <div class="urow"><div class="avatar">周</div><div style="flex:1;"><div>周涛 · 起重信号工</div><div class="muted">证书已核实 · 在岗</div></div></div>
+      </div>
+      <div class="card" style="margin-bottom:0;">
+        <div class="row" style="margin-bottom:12px;"><div class="avatar" style="width:52px;height:52px;">李</div>
+          <div style="flex:1;"><div style="font-weight:600;font-size:15px;">李勇</div><div class="muted">叉车工 · 8年 · 手机 138****6688</div></div>
+          <span class="btn btn-p">编辑</span></div>
+        <b style="font-size:13px;">基础信息</b>
+        <table style="margin:8px 0 12px;"><tr><th>工种</th><th>技能等级</th><th>状态</th><th>班组</th></tr>
+          <tr><td>叉车工</td><td>高级</td><td><span class="badge b-ok">在岗</span></td><td>吊装一组</td></tr></table>
+        <b style="font-size:13px;">资质证书</b>
+        <table style="margin:8px 0 12px;"><tr><th>证书</th><th>状态</th><th>有效期</th></tr>
+          <tr><td>叉车操作证</td><td><span class="badge b-ok">平台已核实</span></td><td>2027.06</td></tr>
+          <tr><td>起重作业证</td><td><span class="badge b-ok">平台已核实</span></td><td>2026.11</td></tr></table>
+        <b style="font-size:13px;">履历（项目自动沉淀）</b>
+        <table style="margin-top:8px;"><tr><th>项目</th><th>角色</th><th>工时</th><th>评价</th></tr>
+          <tr><td>苏州产线搬迁</td><td>叉车</td><td>进行中</td><td><span class="badge b-ok">进行中</span></td></tr>
+          <tr><td>某仓库搬迁</td><td>叉车</td><td>86h</td><td>4.9</td></tr>
+          <tr><td>某设备进场</td><td>叉车</td><td>40h</td><td>4.8</td></tr></table>
+        <div class="muted" style="margin-top:10px;">团队录入与维护 · 平台审核真实性 · 履历随项目自动累积、随人流动</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="desk">
+  <div class="side"><h4>团队管理后台 · 迅捷吊装</h4>
+    <div class="sitem">工人档案管理</div>
+    <div class="sitem on">资质证书审核</div>
+    <div class="sitem">设备台账</div>
+    <div class="sitem">报名与投标</div>
+    <div class="sitem">履约与收款</div>
+  </div>
+  <div class="main">
+    <div class="win"><span class="dot" style="background:#e24b4a;"></span><span class="dot" style="background:#ef9f27;"></span><span class="dot" style="background:#639922;"></span><span class="url">team.example.com/certifications</span></div>
+    <div class="h15" style="margin-bottom:14px;">资质证书管理（到期预警）</div>
+    <div class="card"><table><tr><th>工人</th><th>证书</th><th>有效期</th><th>平台状态</th><th>操作</th></tr>
+      <tr><td>赵强</td><td>叉车操作证</td><td><span class="badge b-warn">2026.10 到期</span></td><td><span class="badge b-warn">续期提醒</span></td><td><span class="btn">提醒续证</span></td></tr>
+      <tr><td>陈军</td><td>司索作业证</td><td>—</td><td><span class="badge b-danger">未上传</span></td><td><span class="btn btn-p">催上传</span></td></tr>
+      <tr><td>李勇</td><td>叉车操作证</td><td>2027.06</td><td><span class="badge b-ok">已核实</span></td><td><span class="muted">—</span></td></tr>
+    </table></div>
+  </div>
+</div>
+
+<!-- ========== 电脑端：需求方（精简） ========== -->
+<div class="pb"></div>
+<div class="sec">五、电脑端 · 需求方 Web（撮合方案 / 项目看板 / 结算）</div>
+<p class="secsub">需求方与项目经理在电脑端看拼单方案、管项目进度、验收结算。</p>
+
+<div class="desk">
+  <div class="side"><h4>需求方工作台</h4>
+    <div class="sitem">需求广场</div>
+    <div class="sitem on">撮合方案</div>
+    <div class="sitem">项目进度看板</div>
+    <div class="sitem">电子签约</div>
+    <div class="sitem">验收与结算</div>
+  </div>
+  <div class="main">
+    <div class="win"><span class="dot" style="background:#e24b4a;"></span><span class="dot" style="background:#ef9f27;"></span><span class="dot" style="background:#639922;"></span><span class="url">app.example.com/matching/plan</span></div>
+    <div class="h15" style="margin-bottom:14px;">拼单撮合方案 · 苏州产线搬迁</div>
+    <div class="grid2" style="margin-bottom:14px;">
+      <div class="metric"><div class="muted">方案总价</div><div class="n">¥86,400</div></div>
+      <div class="metric"><div class="muted">凑齐团队 / 资源</div><div class="n">3 / 13</div></div>
+    </div>
+    <div class="card"><b style="font-size:13px;">资源来源对照（多团队拼单）</b>
+      <table style="margin-top:8px;"><tr><th>资源条目</th><th>来源团队</th><th>数量</th><th>报价</th><th>评分</th></tr>
+        <tr><td>电工</td><td>C · 宏达劳务</td><td>5</td><td>¥380/人天</td><td>4.8</td></tr>
+        <tr><td>叉车(含工)</td><td>A · 迅捷吊装</td><td>3</td><td>¥1,200/台天</td><td>4.9</td></tr>
+        <tr><td>叉车(含工)</td><td>C · 宏达劳务</td><td>2</td><td>¥1,250/台天</td><td>4.8</td></tr>
+        <tr><td>高空作业者</td><td>B · 安捷高空</td><td>3</td><td>¥520/人天</td><td>4.7</td></tr>
+      </table>
+      <div class="prog"><i style="width:100%"></i></div>
+      <div class="muted" style="margin-top:6px;">全部条目已凑齐，可发起多方签约</div></div>
+    <div class="row" style="gap:10px;"><span class="btn btn-p">确认方案并发起签约</span><span class="btn">替换某条目来源</span><span class="btn">查看备选方案</span></div>
+  </div>
+</div>
+
+<div class="desk">
+  <div class="side"><h4>需求方工作台</h4>
+    <div class="sitem">需求广场</div>
+    <div class="sitem">撮合方案</div>
+    <div class="sitem on">项目进度看板</div>
+    <div class="sitem">电子签约</div>
+    <div class="sitem">验收与结算</div>
+  </div>
+  <div class="main">
+    <div class="win"><span class="dot" style="background:#e24b4a;"></span><span class="dot" style="background:#ef9f27;"></span><span class="dot" style="background:#639922;"></span><span class="url">app.example.com/project/board</span></div>
+    <div class="h15" style="margin-bottom:14px;">项目进度 · 苏州产线搬迁（项目经理视图）</div>
+    <div class="grid2" style="margin-bottom:14px;">
+      <div class="metric"><div class="muted">整体进度</div><div class="n">62%</div></div>
+      <div class="metric"><div class="muted">今日到岗</div><div class="n">13/13</div></div>
+    </div>
+    <div class="card"><b style="font-size:13px;">今日打卡 / 成果流</b>
+      <table style="margin-top:8px;"><tr><th>工人</th><th>团队</th><th>打卡</th><th>成果</th></tr>
+        <tr><td>张建国(电工)</td><td>宏达</td><td><span class="badge b-ok">08:02</span></td><td>接线照片×6 <span class="badge b-ok">已审</span></td></tr>
+        <tr><td>李勇(叉车)</td><td>迅捷</td><td><span class="badge b-ok">07:55</span></td><td>吊装视频 <span class="badge b-warn">待审</span></td></tr>
+        <tr><td>王磊(高空)</td><td>安捷</td><td><span class="badge b-danger">缺勤</span></td><td>—</td></tr>
+      </table></div>
+  </div>
+</div>
+
+</body>
+</html>
